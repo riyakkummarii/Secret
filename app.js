@@ -12,13 +12,14 @@ app.set("view engine", "ejs");
 
 mongoose.connect("mongodb://localhost:27017/userDB",{useNewUrlParser: true,useUnifiedTopology: true});
 
-const userSchema={
+const userSchema=new mongoose.Schema({
   email:String,
   password: String
-};
+});
 
 
-
+const secret="Mysecretforthiswebsite";
+userSchema.plugin(encrypt,{secret: secret , encryptedFields:['password']});
 
 const User= new mongoose.model('User',userSchema);
 
